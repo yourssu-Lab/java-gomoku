@@ -1,7 +1,7 @@
 package com.yourssu.view;
 
-import com.yourssu.utils.Pair;
+import com.yourssu.view.dto.CoordinateDTO;
 
 public interface InputView {
-    Pair<Integer, Integer> getInputForCoordinate();
+    CoordinateDTO getInputForCoordinate();
 }
