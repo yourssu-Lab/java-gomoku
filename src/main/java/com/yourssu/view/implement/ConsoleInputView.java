@@ -35,6 +35,8 @@ public class ConsoleInputView implements InputView {
         }
     }
 
+
+
     private static void validatePositionLength(String position) {
         if (position.length() != POSITION_LENGTH) {
             throw new IllegalArgumentException();
