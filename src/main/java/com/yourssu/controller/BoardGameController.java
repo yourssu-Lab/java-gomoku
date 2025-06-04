@@ -1,8 +1,10 @@
 package com.yourssu.controller;
 
 import com.yourssu.model.Board;
+import com.yourssu.model.GameCondition;
+import com.yourssu.model.GameConditionDTO;
 import com.yourssu.model.Piece;
-import com.yourssu.model.VictoryCondition;
+import com.yourssu.model.GameConditionManager;
 import com.yourssu.view.InputView;
 import com.yourssu.view.OutputView;
 import com.yourssu.view.dto.CoordinateDTO;
@@ -13,7 +15,7 @@ public class BoardGameController implements Controller {
     private final InputView inputView;
     private final OutputView outputView;
     private final Board board;
-    private final VictoryCondition victoryCondition;
+    private final GameConditionManager gameConditionManager;
 
     private Piece currentPiece = Piece.BLACK;
     private int turn = 1;
@@ -22,42 +24,45 @@ public class BoardGameController implements Controller {
         this.inputView = inputView;
         this.outputView = outputView;
         this.board = board;
-        this.victoryCondition = new VictoryCondition(this.board);
+        this.gameConditionManager = new GameConditionManager(this.board);
     }
 
     @Override
     public void run() {
-
         while (true) {
-            outputView.printTurn(turn);
-            outputView.printBoard(board);
-            outputView.printCurrentPlayer(currentPiece);
+
+            printTurnBoardPlayer();
             CoordinateDTO coordinate = inputView.getInputForCoordinate();
 
             if (coordinate == null) {
                 outputView.printGameOverMessage();
                 return;
             }
-            try {
-                board.placePiece(coordinate.row(), coordinate.column(), this.currentPiece);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+
+            GameConditionDTO gameConditionDTO = new GameConditionDTO(coordinate.row(), coordinate.column(), turn, this.currentPiece);
+            
+            GameCondition gameCondition = gameConditionManager.judgeGameCondition(gameConditionDTO);
+
+            if (gameCondition == GameCondition.INVALID) {
+                outputView.printInvalidPlaceMessage();
                 continue;
             }
-
-            if (victoryCondition.isWin(coordinate.row(), coordinate.column())) {
+            if (gameCondition == GameCondition.WIN) {
                 outputView.printWinner(board, Symbol.of(currentPiece));
                 return;
             }
-
-            if(victoryCondition.isDraw(turn)) {
+            if (gameCondition == GameCondition.DRAW) {
                 outputView.printDrawMessage();
                 return;
             }
-
             togglePiece();
-
         }
+    }
+
+    private void printTurnBoardPlayer() {
+        outputView.printTurn(turn);
+        outputView.printBoard(board);
+        outputView.printCurrentPlayer(currentPiece);
     }
 
     private void togglePiece() {

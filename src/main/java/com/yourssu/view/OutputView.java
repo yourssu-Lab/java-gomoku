@@ -11,4 +11,5 @@ public interface OutputView {
     void printGameOverMessage();
     void printCurrentPlayer(Piece currentPlayer);
     void printDrawMessage();
+    void printInvalidPlaceMessage();
 }
