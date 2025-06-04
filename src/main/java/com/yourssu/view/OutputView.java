@@ -10,4 +10,5 @@ public interface OutputView {
     void printWinner(Board board, Symbol winner);
     void printGameOverMessage();
     void printCurrentPlayer(Piece currentPlayer);
+    void printDrawMessage();
 }

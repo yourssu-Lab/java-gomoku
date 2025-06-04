@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class GomokuUIConstants {
     static final String COLUMN_LABELS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static final int POSITION_LENGTH = 2;
+    static final int POSITION_LENGTH = 3;
     public static final int BOARD_SIZE = 15;
     static final String GAME_ENDED_COMMAND = "q";
     static final Map<Piece, String> PLAYER_PROMPTS = new HashMap<>();

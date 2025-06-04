@@ -60,4 +60,10 @@ public class ConsoleOutputView implements OutputView {
     public void printGameOverMessage() {
         System.out.println("\n게임이 종료되었습니다.");
     }
+
+    @Override
+    public void printDrawMessage() {
+        System.out.println("\n무승부로 게임이 종료되었습니다.");
+    }
+
 }

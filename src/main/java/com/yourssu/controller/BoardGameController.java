@@ -40,7 +40,6 @@ public class BoardGameController implements Controller {
             }
             try {
                 board.placePiece(coordinate.row(), coordinate.column(), this.currentPiece);
-
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 continue;
@@ -51,7 +50,10 @@ public class BoardGameController implements Controller {
                 return;
             }
 
-            // TODO: 무승부 조건
+            if(victoryCondition.isDraw(turn)) {
+                outputView.printDrawMessage();
+                return;
+            }
 
             togglePiece();
 
@@ -63,7 +65,7 @@ public class BoardGameController implements Controller {
             this.currentPiece = Piece.WHITE;
         } else if (this.currentPiece == Piece.WHITE) {
             this.currentPiece = Piece.BLACK;
+            turn++;
         }
-        turn++; // TODO: 흑-백 까지 둬야 한 턴
     }
 }
