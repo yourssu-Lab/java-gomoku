@@ -15,6 +15,7 @@ public class BoardTest {
       boardState[3][3] = Piece.WHITE;
 
 
+
         // when
       Board board = new BoardImpl(boardState);
       Piece result = board.getPiece(3, 3);

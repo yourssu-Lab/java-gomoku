@@ -26,15 +26,28 @@ public class BoardImpl implements Board {
 
     @Override
     public Piece getPiece(int row, int column) {
-        if (row > board.length || column > board.length) throw new IllegalArgumentException();
-        if (row < 0 || column < 0) throw new IllegalArgumentException();
+        if (row > board.length || column > board.length) {
+            throw new IllegalArgumentException();
+        }
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException();
+        }
         return this.board[row][column] ;
     }
 
     @Override
     public void placePiece(int row, int column, Piece piece) {
-        if (row > board.length || column > board.length) throw new IllegalArgumentException();
-        if (row < 0 || column < 0) throw new IllegalArgumentException();
+        if (row > board.length || column > board.length) {
+            throw new IllegalArgumentException();
+        }
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException();
+        }
         this.board[row][column] = piece;
+    }
+
+    @Override
+    public int getSize() {
+        return this.board.length;
     }
 }
