@@ -8,7 +8,14 @@ import java.util.Scanner;
 import static com.yourssu.view.implement.GomokuUIConstants.*;
 
 public class ConsoleInputView implements InputView {
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+    public ConsoleInputView(Scanner scanner) {
+        if (scanner == null) {
+            this.scanner = new Scanner(System.in);
+            return;
+        }
+        this.scanner = scanner;
+    }
 
     private String getInput() {
         return scanner.nextLine().trim();

@@ -6,7 +6,6 @@ public class BoardImpl implements Board {
 
     public BoardImpl(Piece[][] boardState) {
         this.board = boardState;
-
     }
 
     public BoardImpl(int size) {
