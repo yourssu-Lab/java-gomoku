@@ -28,12 +28,21 @@ public class BoardController implements Controller {
     @Override
     public void run() {
 
+        boolean isCompleted =true;
+
         while (true) {
+
             outputView.printTurn(turn.getCurrentTurn());
             outputView.printBoard(board);
             outputView.printCurrentPlayer(turn.getCurrnetPiece());
 
             CoordinateDTO coordinateDTO = inputView.getInputForCoordinate(board.getSize());
+
+            if (coordinateDTO == null) {
+                System.out.println("게임이 종료되었습니다.");
+                isCompleted = false;
+                break;
+            }
 
             board.placePiece(coordinateDTO.row(), coordinateDTO.column(), turn.getCurrnetPiece());
 
@@ -44,22 +53,8 @@ public class BoardController implements Controller {
             turn.next();
         }
 
-        outputView.printWinner(board, Symbol.of(turn.getCurrnetPiece()));
+        if(isCompleted) {
+            outputView.printWinner(board, Symbol.of(turn.getCurrnetPiece()));
+        }
     }
-
-
-    /*
-    턴 몇인지 : Turn & outputVIew
-    보드 현상태 : outputView
-    누구차례입니다~ 입력하세요 : turn & outputView
-
-    input => A7  : input View
-    board.setPiece()
-    지금이 승리 상태인지 확인
-   아니면 다음턴 넘기고
-   출력 반복.
-
-   승인경우: printWinner : OutputView
-
-     */
 }

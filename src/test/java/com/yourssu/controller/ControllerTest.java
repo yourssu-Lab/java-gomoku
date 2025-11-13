@@ -12,7 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,10 +19,8 @@ public class ControllerTest {
     private ByteArrayOutputStream outputStreamCaptor;
 
     void systemIn(String input) {
-        System.out.println("왜 안돼 ㅠ");
         ByteArrayInputStream inputs = new ByteArrayInputStream(input.getBytes());
         System.setIn(inputs);
-        System.out.println(inputs);
     }
 
     @BeforeEach
@@ -41,25 +38,71 @@ public class ControllerTest {
                 new WinnerChecker(),
                 new BoardImpl(10)
         );
-        systemIn("A1\n"); // 흑
+        systemIn("""
+                A1
+                B1
+                A2
+                B2
+                A3
+                B3
+                A4
+                B4
+                A5
+                """);
 
         controller.run();
 
-
-
         outputStreamCaptor.flush();
-
 
         assertThat(outputStreamCaptor.toString()).
                 contains("BLACK wins");
     }
 
     @Test
-    public void inputTest() {
-        String input = "test";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Scanner scanner = new Scanner(System.in);
+    void 백이_이기는_시나리오_1() throws IOException {
+        Controller controller = new BoardController(
+                new ConsoleInputView(),
+                new ConsoleOutputView(),
+                new Turn(),
+                new WinnerChecker(),
+                new BoardImpl(10)
+        );
+        systemIn("""
+                A1
+                B1
+                A2
+                B2
+                A3
+                B3
+                A4
+                B4
+                A4
+                B5
+                """);
 
-        assertThat(input).isEqualTo(scanner.nextLine());
+        controller.run();
+
+        outputStreamCaptor.flush();
+
+        assertThat(outputStreamCaptor.toString()).
+                contains("WHITE wins");
+    }
+
+    @Test
+    void 게임_진행_중_q를_입력하면_게임을_종료한다() {
+        Controller controller = new BoardController(
+                new ConsoleInputView(),
+                new ConsoleOutputView(),
+                new Turn(),
+                new WinnerChecker(),
+                new BoardImpl(10)
+        );
+
+        systemIn("q");
+
+        controller.run();
+
+        assertThat(outputStreamCaptor.toString()).
+                contains("게임이 종료되었습니다.");
     }
 }
