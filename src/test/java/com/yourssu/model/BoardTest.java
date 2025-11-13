@@ -59,11 +59,24 @@ public class BoardTest {
     void isPlacePieceWellMutateState() {
         // given
         Piece[][] boardState = new Piece[5][5];
+        for (int i = 0; i < boardState.length; i++) {
+            for (int j = 0; j < boardState[i].length; j++) {
+                boardState[i][j] = Piece.EMPTY;
+            }
+        }
 
         Board board = new BoardImpl(boardState);
         board.placePiece(0,0,Piece.WHITE);
 
         assertThat(boardState[0][0]).isNotNull().isInstanceOf(Piece.class).isEqualTo(Piece.WHITE);
+    }
+
+    @Test
+    void 겹치는_곳에_돌을_놓으면_예외를_반환하는가() {
+        Board board = new BoardImpl(5);
+        board.placePiece(0,0,Piece.WHITE);
+
+        assertThatThrownBy(() -> board.placePiece(0,0,Piece.BLACK)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

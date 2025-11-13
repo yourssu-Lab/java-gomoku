@@ -7,6 +7,7 @@ import com.yourssu.view.OutputView;
 import static com.yourssu.view.implement.GomokuUIConstants.*;
 
 public class ConsoleOutputView implements OutputView {
+    private final int size;
     @Override
     public void printTurn(int turn) {
         System.out.println("\nTurn " + turn);
@@ -14,28 +15,32 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printBoard(Board board) {
-        printColumnLabels();
+        printColumnLabels(board);
         printRows(board);
-        printColumnLabels();
+        printColumnLabels(board);
     }
 
-    private void printColumnLabels() {
+    public ConsoleOutputView(int size) {
+        this.size = size;
+    }
+
+    private void printColumnLabels(Board board) {
         System.out.print(" O ");
-        for (int c = 0; c < BOARD_SIZE; c++) {
+        for (int c = 0; c < this.size; c++) {
             System.out.print(" " + COLUMN_LABELS.charAt(c));
         }
         System.out.println();
     }
 
     private void printRows(Board board) {
-        for (int row = 0; row < BOARD_SIZE; row++) {
+        for (int row = 0; row < this.size; row++) {
             printRow(board, row);
         }
     }
 
     private static void printRow(Board board, int row) {
-        System.out.printf("%2d ", BOARD_SIZE - row);
-        for (int column = 0; column < BOARD_SIZE; column++) {
+        System.out.printf("%2d ", board.getSize() - row);
+        for (int column = 0; column < board.getSize(); column++) {
             System.out.print(" " + Symbol.of(board.getPiece(row, column)).getString());
         }
         System.out.println();

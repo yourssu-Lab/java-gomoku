@@ -9,13 +9,18 @@ import static com.yourssu.view.implement.GomokuUIConstants.*;
 
 public class ConsoleInputView implements InputView {
     private final Scanner scanner;
-    public ConsoleInputView(Scanner scanner) {
+    private final int size;
+
+    public ConsoleInputView(Scanner scanner, int size) {
         if (scanner == null) {
             this.scanner = new Scanner(System.in);
+            this.size = size;
             return;
         }
         this.scanner = scanner;
+        this.size = size;
     }
+
 
     private String getInput() {
         return scanner.nextLine().trim();
@@ -34,7 +39,7 @@ public class ConsoleInputView implements InputView {
         validatePositionLength(position);
         int col = COLUMN_LABELS.indexOf(position.toUpperCase().charAt(0));
         try {
-            int row = BOARD_SIZE - Integer.parseInt(position.substring(1));
+            int row = size - Integer.parseInt(position.substring(1));
             validateCoordinate(row, col);
             return new CoordinateDTO(row, col);
         } catch (NumberFormatException e) {
@@ -49,7 +54,7 @@ public class ConsoleInputView implements InputView {
     }
 
     private void validateCoordinate(int row, int col) {
-        if (row < 0 || row >= BOARD_SIZE || col >= BOARD_SIZE) {
+        if (row < 0 || row >= size || col >= size) {
             throw new IllegalArgumentException();
         }
     }

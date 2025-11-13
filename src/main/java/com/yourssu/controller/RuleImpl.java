@@ -7,7 +7,7 @@ public class RuleImpl implements Rule {
     private static final int[] dx = {1, 0, 1, 1};
     private static final int[] dy = {0, 1, 1, -1};
 
-    private Board board;
+    private final Board board;
 
     public RuleImpl(Board board) {
         this.board = board;
@@ -17,6 +17,7 @@ public class RuleImpl implements Rule {
     public boolean isWin(int row, int col) {
         for (int dir = 0; dir < 4; dir++) {
             if (countPieceLine(row, col, this.board, dir) >= 5) {
+
                 return true;
             }
         }

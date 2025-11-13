@@ -38,6 +38,7 @@ public class ControllerImpl implements Controller {
 
             if (proceedTurn(currentPiece)) {
                 printGameOver(currentPiece);
+                break;
             }
 
             turn++;
@@ -46,6 +47,7 @@ public class ControllerImpl implements Controller {
         if (this.turn == pow(board.getSize(), 2)) {
             return null;
         }
+
         return currentPiece;
     }
 
@@ -59,7 +61,7 @@ public class ControllerImpl implements Controller {
     }
 
     private void printPrompt(Piece currentPlayer) {
-        outputView.printTurn(this.turn);
+        outputView.printTurn((this.turn / 2) + 1);
         outputView.printBoard(this.board);
         outputView.printCurrentPlayer(currentPlayer);
     }

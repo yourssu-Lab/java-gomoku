@@ -42,6 +42,11 @@ public class BoardImpl implements Board {
         if (row < 0 || column < 0) {
             throw new IllegalArgumentException();
         }
+
+        if (this.board[row][column] != Piece.EMPTY) {
+            throw new IllegalArgumentException();
+        }
+
         this.board[row][column] = piece;
     }
 
