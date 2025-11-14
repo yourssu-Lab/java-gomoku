@@ -76,7 +76,7 @@
 
 ```json
 {
-  "timestamp": "2025-11-14 15:11:00",
+  "timestamp": "2025-11-14T15:11:00Z",
   "result": {
     "move": {
       "player": "BLACK",
@@ -122,7 +122,7 @@
 
 ```json
 {
-  "timestamp": "2025-11-14 15:15:00",
+  "timestamp": "2025-11-14T15:15:00Z",
   "result": {
     "move": {
       "player": "BLACK",

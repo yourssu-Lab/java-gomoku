@@ -41,7 +41,7 @@
 
 ```json
 {
-  "timestamp": "2025-11-14 15:09:00",
+  "timestamp": "2025-11-14T15:09:00Z",
   "result": {
     "gameId": "game-001",
     "size": 15,
