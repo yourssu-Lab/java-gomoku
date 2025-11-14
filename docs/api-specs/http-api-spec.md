@@ -32,7 +32,7 @@
 
 ```json
 {
-  "timestamp": "2025-11-14 15:09:00",
+  "timestamp": "2025-11-14T15:09:00Z",
   "result": {
     /* 실제 데이터 */
   }
@@ -43,7 +43,7 @@
 
 ```json
 {
-  "timestamp": "2025-11-14 15:09:00",
+  "timestamp": "2025-11-14T15:09:00Z",
   "error": "Error message"
 }
 ```
