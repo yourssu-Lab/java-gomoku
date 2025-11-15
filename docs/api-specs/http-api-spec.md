@@ -72,16 +72,16 @@
 |--------|--------------------------------|-------------|-------------------------------------------------|
 | POST   | `/api/v1/games`                | 새 게임 생성     | [createGame](./endpoints/create-game.md)        |
 | GET    | `/api/v1/games/{gameId}`       | 게임 상태 조회    | [getGameStatus](./endpoints/get-game-status.md) |
-| POST   | `/api/v1/games/{gameId}/moves` | 돌 놓기        | [placeStone](./endpoints/place-stone.md)        |
+| POST   | `/api/v1/games/{gameId}/stones` | 돌 놓기        | [placeStone](./endpoints/place-stone.md)        |
 
 ---
 
 ## 게임 플로우
 
 1. **게임 생성**: `POST /api/v1/games` 호출로 새 게임 생성 → 게임 ID 반환
-2. **돌 놓기**: BLACK 플레이어가 `POST /api/v1/games/{gameId}/moves` 호출
+2. **돌 놓기**: BLACK 플레이어가 `POST /api/v1/games/{gameId}/stones` 호출
 3. **상태 확인**: 필요시 `GET /api/v1/games/{gameId}`로 현재 상태 조회
-4. **돌 놓기**: WHITE 플레이어가 `POST /api/v1/games/{gameId}/moves` 호출
+4. **돌 놓기**: WHITE 플레이어가 `POST /api/v1/games/{gameId}/stones` 호출
 5. **반복**: 승리 조건이 만족되거나 무승부가 될 때까지 2-4 반복
 6. **게임 종료**: `status`가 `COMPLETED` 또는 `DRAW`가 되면 종료
 
