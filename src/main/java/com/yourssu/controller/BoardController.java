@@ -46,7 +46,7 @@ public class BoardController implements Controller {
 
             board.placePiece(coordinateDTO.row(), coordinateDTO.column(), turn.getCurrnetPiece());
 
-            if (winnerChecker.checkWinner(board, coordinateDTO.row(), coordinateDTO.column())){
+            if (winnerChecker.checkWinner(board, CoordinateDTO.toDomain(coordinateDTO)) != null){
                 break;
             }
 

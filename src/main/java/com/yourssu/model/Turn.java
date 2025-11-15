@@ -23,4 +23,6 @@ public class Turn {
             currentPiece = Piece.BLACK;
         }
     }
+    
+    // to String 구현 필요
 }

@@ -1,124 +1,154 @@
 package com.yourssu.strategy;
 
 import com.yourssu.model.Board;
+import com.yourssu.model.Coordinate;
 import com.yourssu.model.Piece;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WinnerChecker {
     public WinnerChecker() {
     }
 
-    public boolean checkWinner(Board board, int row, int column) {
+    public static List<Coordinate> checkWinner(Board board, Coordinate coordinate) {
 
-        Piece pieceColor = board.getPiece(row, column);
+        Piece pieceColor = board.getPiece(coordinate.row(), coordinate.column());
 
         if (pieceColor == Piece.EMPTY) {
             throw new IllegalArgumentException("잘못된 입력입니다");
         }
 
-        return checkRow(board, row, column) || checkColumn(board, row, column) || checkDiagonal(board, row, column);
+        List<Coordinate> checkingLine = checkRow(board, coordinate);
+        if (checkingLine != null) {
+            return checkingLine;
+        }
+
+        checkingLine = checkColumn(board, coordinate);
+        if (checkingLine != null) {
+            return checkingLine;
+        }
+
+        checkingLine = checkDiagonal(board, coordinate);
+        if (checkingLine != null) {
+            return checkingLine;
+        }
+
+        return null;
     }
 
-    private boolean checkRow(Board board, int row, int column) {
-        int count = 0;
-        Piece pieceColor = board.getPiece(row, column);
+    private static List<Coordinate> checkRow(Board board, Coordinate coordinate) {
+        Piece pieceColor = board.getPiece(coordinate.row(), coordinate.column());
+        List<Coordinate> winningLine = new ArrayList<>();
 
-        for (int i = column + 1; i < board.getSize(); i++) {
-            if (board.getPiece(row, i) != pieceColor) {
+        for (int i = coordinate.column() + 1; i < board.getSize(); i++) {
+            if (board.getPiece(coordinate.row(), i) != pieceColor) {
                 break;
             }
-            count++;
+            winningLine.add(new Coordinate(coordinate.row(), i));
         }
-        for (int i = column; i >= 0; i--) {
-            if (board.getPiece(row, i) != pieceColor) {
+        for (int i = coordinate.column(); i >= 0; i--) {
+            if (board.getPiece(coordinate.row(), i) != pieceColor) {
                 break;
             }
-            count++;
+            winningLine.add(new Coordinate(coordinate.row(), i));
+
         }
 
-        if (count == 5) {
-            return true;
-        }
-
-        return false;
+        return checkLine(winningLine);
     }
 
-    private boolean checkColumn(Board board, int row, int column) {
-        int count = 0;
-        Piece pieceColor = board.getPiece(row, column);
+    private static List<Coordinate> checkColumn(Board board, Coordinate coordinate) {
+        Piece pieceColor = board.getPiece(coordinate.row(), coordinate.column());
+        List<Coordinate> winningLine = new ArrayList<>();
 
-        for (int i = row + 1; i < board.getSize(); i++) {
-            if (board.getPiece(i, column) != pieceColor) {
+        for (int i = coordinate.row() + 1; i < board.getSize(); i++) {
+            if (board.getPiece(i, coordinate.column()) != pieceColor) {
                 break;
             }
-            count++;
+            winningLine.add(new Coordinate(i, coordinate.column()));
         }
-        for (int i = row; i >= 0; i--) {
-            if (board.getPiece(i, column) != pieceColor) {
+
+        for (int i = coordinate.row(); i >= 0; i--) {
+            if (board.getPiece(i, coordinate.column()) != pieceColor) {
                 break;
             }
-            count++;
+            winningLine.add(new Coordinate(i, coordinate.column()));
         }
 
-        if (count == 5) {
-            return true;
+        return checkLine(winningLine);
+    }
+
+    private static List<Coordinate> checkDiagonal(Board board, Coordinate coordinate) {
+        List<Coordinate> checkingLine = checkDownDiagonal(board, coordinate);
+        if (checkingLine != null) {
+            return checkingLine;
         }
 
-        return false;
+        return checkUpDiagonal(board, coordinate);
     }
 
-    private boolean checkDiagonal(Board board, int row, int column) {
-        return checkDownDiagonal(board, row, column) || checkUpDiagonal(board, row, column);
-    }
-
-    private static boolean checkDownDiagonal(Board board, int row, int column) {
-        int count = 0;
-        Piece pieceColor = board.getPiece(row, column);
+    private static List<Coordinate> checkDownDiagonal(Board board, Coordinate coordinate) {
+        Piece pieceColor = board.getPiece(coordinate.row(), coordinate.column());
+        List<Coordinate> winningLine = new ArrayList<>();
 
         for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
-            if (row - i < 0 || column - i < 0) {
+            if (coordinate.row() - i < 0 || coordinate.column() - i < 0) {
                 break;
             }
-            if (board.getPiece(row - i, column - i) != pieceColor) {
+            if (board.getPiece(coordinate.row() - i, coordinate.column() - i) != pieceColor) {
                 break;
             }
-            count++;
-        }
-
-        for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
-            if (row + i >= board.getSize() || column + i >= board.getSize()) {
-                break;
-            }
-            if (board.getPiece(row + i, column + i) != pieceColor) {
-                break;
-            }
-            count++;
-        }
-        return count == 5;
-    }
-
-    private static boolean checkUpDiagonal(Board board, int row, int column) {
-        int count = 0;
-        Piece pieceColor = board.getPiece(row, column);
-
-        for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
-            if (row + i >= board.getSize() || column - i < 0) {
-                break;
-            }
-            if (board.getPiece(row + i, column - i) != pieceColor) {
-                break;
-            }
-            count++;
+            winningLine.add(new Coordinate(coordinate.row() - i, coordinate.column() - i));
         }
 
         for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
-            if (row - i < 0 || column + i >= board.getSize()) {
+            if (coordinate.row() + i >= board.getSize() || coordinate.column() + i >= board.getSize()) {
                 break;
             }
-            if (board.getPiece(row - i, column + i) != pieceColor) {
+            if (board.getPiece(coordinate.row() + i, coordinate.column() + i) != pieceColor) {
                 break;
             }
-            count++;
+            winningLine.add(new Coordinate(coordinate.row() + i, coordinate.column() + i));
+
         }
-        return count == 5;
+        return checkLine(winningLine);
+    }
+
+    private static List<Coordinate> checkUpDiagonal(Board board, Coordinate coordinate) {
+        Piece pieceColor = board.getPiece(coordinate.row(), coordinate.column());
+        List<Coordinate> winningLine = new ArrayList<>();
+
+
+        for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
+            if (coordinate.row() + i >= board.getSize() || coordinate.column() - i < 0) {
+                break;
+            }
+            if (board.getPiece(coordinate.row() + i, coordinate.column() - i) != pieceColor) {
+                break;
+            }
+            winningLine.add(new Coordinate(coordinate.row() + i, coordinate.column() - i));
+        }
+
+        for (int i = 0; i < (board.getSize() + 1) / 2; i++) {
+            if (coordinate.row() - i < 0 || coordinate.column() + i >= board.getSize()) {
+                break;
+            }
+            if (board.getPiece(coordinate.row() - i, coordinate.column() + i) != pieceColor) {
+                break;
+            }
+            winningLine.add(new Coordinate(coordinate.row() - i, coordinate.column() + i));
+
+        }
+
+        return checkLine(winningLine);
+    }
+
+    private static List<Coordinate> checkLine(List<Coordinate> winningLine) {
+        if (winningLine.size() == 5) {
+            return winningLine;
+        }
+
+        return null;
     }
 }
