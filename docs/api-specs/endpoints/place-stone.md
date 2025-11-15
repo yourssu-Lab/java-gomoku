@@ -1,4 +1,4 @@
-# placeStone (POST /api/v1/games/{gameId}/moves)
+# placeStone (POST /api/v1/games/{gameId}/stones)
 
 지정한 게임의 좌표에 돌을 놓습니다.
 
