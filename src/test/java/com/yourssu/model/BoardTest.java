@@ -1,8 +1,10 @@
 package com.yourssu.model;
 
 
+import com.yourssu.domain.Board;
+import com.yourssu.domain.BoardImpl;
+import com.yourssu.domain.Piece;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;

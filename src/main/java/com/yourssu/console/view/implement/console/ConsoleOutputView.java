@@ -1,0 +1,69 @@
+package com.yourssu.console.view.implement.console;
+
+import com.yourssu.domain.Board;
+import com.yourssu.domain.Piece;
+import com.yourssu.console.view.OutputView;
+import com.yourssu.console.view.implement.Symbol;
+
+import static com.yourssu.console.view.implement.console.GomokuUIConstants.*;
+
+public class ConsoleOutputView implements OutputView {
+    private final int size;
+    @Override
+    public void printTurn(int turn) {
+        System.out.println("\nTurn " + turn);
+    }
+
+    @Override
+    public void printBoard(Board board) {
+        printColumnLabels(board);
+        printRows(board);
+        printColumnLabels(board);
+    }
+
+    public ConsoleOutputView(int size) {
+        this.size = size;
+    }
+
+    private void printColumnLabels(Board board) {
+        System.out.print(" O ");
+        for (int c = 0; c < this.size; c++) {
+            System.out.print(" " + COLUMN_LABELS.charAt(c));
+        }
+        System.out.println();
+    }
+
+    private void printRows(Board board) {
+        for (int row = 0; row < this.size; row++) {
+            printRow(board, row);
+        }
+    }
+
+    private static void printRow(Board board, int row) {
+        System.out.printf("%2d ", board.getSize() - row);
+        for (int column = 0; column < board.getSize(); column++) {
+            System.out.print(" " + Symbol.of(board.getPiece(row, column)).getString());
+        }
+        System.out.println();
+    }
+
+    @Override
+    public void printCurrentPlayer(Piece currentPlayer) {
+        if (!PLAYER_PROMPTS.containsKey(currentPlayer)) {
+            throw new IllegalArgumentException();
+        }
+        System.out.print(PLAYER_PROMPTS.get(currentPlayer));
+    }
+
+    @Override
+    public void printWinner(Board board, Symbol winner) {
+        System.out.println("\nResult");
+        printBoard(board);
+        System.out.printf("%s wins!\n", winner.name());
+    }
+
+    @Override
+    public void printGameOverMessage() {
+        System.out.println("\n게임이 종료되었습니다.");
+    }
+}

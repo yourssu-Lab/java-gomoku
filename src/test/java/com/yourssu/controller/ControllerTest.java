@@ -1,18 +1,17 @@
 package com.yourssu.controller;
 
-import com.yourssu.model.Board;
-import com.yourssu.model.BoardImpl;
-import com.yourssu.view.InputView;
-import com.yourssu.view.OutputView;
-import com.yourssu.view.implement.ConsoleInputView;
-import com.yourssu.view.implement.ConsoleOutputView;
+import com.yourssu.console.controller.Controller;
+import com.yourssu.console.controller.ControllerImpl;
+import com.yourssu.domain.Board;
+import com.yourssu.domain.BoardImpl;
+import com.yourssu.console.view.InputView;
+import com.yourssu.console.view.OutputView;
+import com.yourssu.console.view.implement.console.ConsoleInputView;
+import com.yourssu.console.view.implement.console.ConsoleOutputView;
 import org.junit.jupiter.api.Test;
 import java.util.Scanner;
-import com.yourssu.model.Board;
-import com.yourssu.model.BoardImpl;
-import com.yourssu.model.Piece;
-import com.yourssu.view.dto.CoordinateDTO;
-import org.junit.jupiter.api.Test;
+
+import com.yourssu.domain.Piece;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

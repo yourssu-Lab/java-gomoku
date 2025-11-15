@@ -1,9 +1,10 @@
 package com.yourssu.controller;
 
-import com.yourssu.model.Board;
-import com.yourssu.model.BoardImpl;
-import com.yourssu.model.Piece;
-import com.yourssu.view.dto.CoordinateDTO;
+import com.yourssu.domain.Rule;
+import com.yourssu.domain.RuleImpl;
+import com.yourssu.domain.Board;
+import com.yourssu.domain.BoardImpl;
+import com.yourssu.domain.Piece;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
